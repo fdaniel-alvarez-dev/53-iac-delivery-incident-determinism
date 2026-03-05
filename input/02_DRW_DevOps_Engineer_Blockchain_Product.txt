@@ -1,0 +1,52 @@
+https://job-boards.greenhouse.io/drweng/jobs/7456423
+
+DevOps Engineer, Blockchain Product
+Chicago
+DRW is a diversified trading firm with over 3 decades of experience bringing sophisticated technology and exceptional people together to operate in markets around the world. We value autonomy and the ability to quickly pivot to capture opportunities, so we operate using our own capital and trading at our own risk.
+
+Headquartered in Chicago with offices throughout the U.S., Canada, Europe, and Asia, we trade a variety of asset classes including Fixed Income, ETFs, Equities, FX, Commodities and Energy across all major global markets. We have also leveraged our expertise and technology to expand into three non-traditional strategies: real estate, venture capital and cryptoassets.
+
+We operate with respect, curiosity and open minds. The people who thrive here share our belief that it’s not just what we do that matters–it's how we do it. DRW is a place of high expectations, integrity, innovation and a willingness to challenge consensus.
+
+We are looking for a DevOps Engineer to join Cumberland’s blockchain product development team. This role will be responsible for designing and supporting highly available systems in a technologically diverse stack used to support on-chain application infrastructure globally. Leveraging Docker, Kubernetes, CI/CD, Python, Prometheus and Grafana, you will build repeatable and supportable infrastructure that meets the demanding needs of our business.
+
+Location: Austin, Chicago, Houston, or New York.  Open to remote for the right candidate.
+
+Responsibilities:
+
+Participate in designing and supporting highly available systems
+Continue to push efforts for building out infra on Kubernetes
+Continue to enhance monitoring infra using Prometheus, Grafana, and other industry standard monitoring solutions
+Enhance CI/CD processes leveraging declarative configuration tools
+Help create easily repeatable patterns for local development to migrate to production
+Support and enhance highly available database architecture
+Build and enhance tooling used by the DevOps team
+Research and implement new technologies
+Consistently challenge the norm and advocate for change
+Required Skills Experience & Abilities:
+
+8+ years experience supporting mission critical, high-performance applications
+Experience with AWS, EKS management, and Terraform
+Some exposure to Auth0
+Deploying and supporting applications in Kubernetes
+Monitoring applications using Prometheus and Grafana
+Developed CI/CD pipelines for Kubernetes deployments
+Solid Python experience
+Database support for highly available systems
+Previous Linux platform support experience
+Basic knowledge of TLS
+Demonstrated knowledge of network communications experience, including multicast, gRPC, and websockets
+Flexibility to take off-hours support calls as needs dictate
+Ability to learn quickly; a passion for new technology
+Self-motivated to continually expand skillset and improve supported systems
+Demonstrated high level of ownership and accountability
+Ability to handle pressure and time constraints with composure
+Strong organizational skills, including planning, prioritization, and documentation
+Prior exposure to cryptoasset infrastructure and on-chain applications is a plus
+The annual base salary range for this position is $150,000 to $225,000 depending on the candidate’s experience, qualifications, and relevant skill set. The position is also eligible for an annual discretionary bonus. In addition, DRW offers a comprehensive suite of employee benefits including group medical, pharmacy, dental and vision insurance, 401k (with discretionary employer match), short and long-term disability, life and AD&D insurance, health savings accounts, and flexible spending accounts.
+
+For more information about DRW's processing activities and our use of job applicants' data, please view our Privacy Notice at https://drw.com/privacy-notice.
+
+California residents, please review the California Privacy Notice for information about certain legal rights at https://drw.com/california-privacy-notice.
+
+[#LI-TL1] 
