@@ -49,6 +49,7 @@ def run_all_checks(*, inputs: Path, repo_root: Path) -> list[Finding]:
 
     findings.extend(_check_delivery_guardrails(inputs))
     findings.extend(_check_reliability_observability(inputs, repo_root=repo_root))
+    findings.extend(_check_database_ha(inputs))
     findings.extend(_check_runbooks_present(repo_root))
 
     return sorted(findings, key=lambda f: (f.severity, f.pain_point, f.id, f.title))
@@ -222,6 +223,22 @@ def _check_kubernetes_safety(inputs: Path) -> list[Finding]:
                     "Set progressDeadlineSeconds so stuck rollouts fail fast and trigger an actionable alert/runbook."
                 ),
                 evidence=["No progressDeadlineSeconds found in workload manifests."],
+            )
+        )
+
+    ingress_present = re.search(r"kind:\s*Ingress", kube_text) is not None
+    if ingress_present and "tls:" not in kube_text:
+        findings.append(
+            _finding(
+                "K8S091",
+                "Ingress defined without TLS configuration",
+                severity="ERROR",
+                pain_point="reliability",
+                remediation=(
+                    "Configure TLS on Ingress (or equivalent) to protect traffic in transit; ensure certificates are managed "
+                    "by a safe mechanism (e.g., cert-manager) and endpoints use modern TLS."
+                ),
+                evidence=["Detected kind: Ingress but no 'tls:' stanza found."],
             )
         )
 
@@ -406,6 +423,81 @@ def _check_reliability_observability(inputs: Path, *, repo_root: Path) -> list[F
                 pain_point="reliability",
                 remediation="Add an incident runbook and link it from alerts via runbook_url.",
                 evidence=["docs/runbooks/incident_observability.md not found."],
+            )
+        )
+
+    return findings
+
+
+def _check_database_ha(inputs: Path) -> list[Finding]:
+    files = load_text_files(inputs, extensions={".yaml", ".yml", ".json", ".md", ".txt"})
+    text = "\n".join(f.text for f in files)
+
+    # Only enforce when database manifests are present; otherwise the repo may be validating an app-only bundle.
+    db_signal = re.search(r"(StatefulSet|postgres|postgresql|database)", text, re.IGNORECASE) is not None
+    if not db_signal:
+        return []
+
+    findings: list[Finding] = []
+
+    if re.search(r"kind:\s*StatefulSet", text) is None:
+        findings.append(
+            _finding(
+                "DB001",
+                "Database bundle detected but no StatefulSet found",
+                severity="ERROR",
+                pain_point="reliability",
+                remediation="Model stateful databases via StatefulSets (or managed services) with explicit HA controls.",
+                evidence=["Database signal detected, but no kind: StatefulSet found."],
+            )
+        )
+        return findings
+
+    if re.search(r"kind:\s*PodDisruptionBudget", text) is None:
+        findings.append(
+            _finding(
+                "DB002",
+                "Stateful database lacks PodDisruptionBudget (risk of correlated restarts)",
+                severity="ERROR",
+                pain_point="reliability",
+                remediation="Add a PodDisruptionBudget so maintenance/evictions don't take down quorum or all replicas.",
+                evidence=["No kind: PodDisruptionBudget found."],
+            )
+        )
+
+    if "podAntiAffinity" not in text and "topologySpreadConstraints" not in text:
+        findings.append(
+            _finding(
+                "DB003",
+                "Stateful database lacks anti-affinity or topology spread",
+                severity="ERROR",
+                pain_point="reliability",
+                remediation="Spread replicas across nodes/zones using podAntiAffinity or topologySpreadConstraints.",
+                evidence=["No 'podAntiAffinity' or 'topologySpreadConstraints' found."],
+            )
+        )
+
+    if "storageClassName" not in text:
+        findings.append(
+            _finding(
+                "DB004",
+                "Stateful database lacks explicit storageClassName",
+                severity="WARN",
+                pain_point="iac_drift",
+                remediation="Set storageClassName explicitly to avoid drift across clusters/environments.",
+                evidence=["No 'storageClassName' found."],
+            )
+        )
+
+    if "readinessProbe" not in text or "livenessProbe" not in text:
+        findings.append(
+            _finding(
+                "DB005",
+                "Stateful database lacks readiness/liveness probes",
+                severity="ERROR",
+                pain_point="reliability",
+                remediation="Add readiness/liveness probes so the scheduler and service endpoints reflect actual health.",
+                evidence=["Missing readinessProbe and/or livenessProbe in database manifests."],
             )
         )
 
