@@ -32,7 +32,7 @@ make demo
 
 Open `artifacts/report.md` to see a report that maps detections to the three pain points.
 
-## A generic tip
+## Operating model (how this runs in a real team)
 
 When presenting any DevOps project, start from the failure mode it prevents (drift, risky releases, slow incident response), then show the smallest repeatable demo that proves the guardrails work end-to-end.
 
