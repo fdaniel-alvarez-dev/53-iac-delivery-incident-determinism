@@ -32,16 +32,9 @@ make demo
 
 Open `artifacts/report.md` to see a report that maps detections to the three pain points.
 
-## Demo (what to show in an interview)
+## A generic tip
 
-1) Run the report:
-   - `make demo`
-2) Show the validator:
-   - `PYTHONPATH=src .venv/bin/python -m portfolio_proof validate --inputs examples/good --repo-root .`
-3) Explain how the report reduces risk:
-   - IaC drift: version pinning + remote backend + lockfile + Kubernetes safety rails
-   - Delivery friction: concurrency + lint/test gates + immutable versioning signals + rollout checks
-   - Reliability: alert metadata (severity/owner/runbook_url) + dashboards + SLO presence + runbooks
+When presenting any DevOps project, start from the failure mode it prevents (drift, risky releases, slow incident response), then show the smallest repeatable demo that proves the guardrails work end-to-end.
 
 ## Security
 
