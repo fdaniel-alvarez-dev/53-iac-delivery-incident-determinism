@@ -1,0 +1,11 @@
+{
+  "title": "Onchain Gateway - Golden Signals",
+  "timezone": "utc",
+  "panels": [
+    { "title": "RPS", "type": "timeseries" },
+    { "title": "Error Rate", "type": "timeseries" },
+    { "title": "Latency (p95)", "type": "timeseries" },
+    { "title": "CPU/Memory", "type": "timeseries" }
+  ]
+}
+

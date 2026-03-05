@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: alerts
+spec:
+  groups:
+    - name: rules
+      rules:
+        - alert: SomethingIsWrong
+          expr: vector(1)
+          labels:
+            service: unknown
+

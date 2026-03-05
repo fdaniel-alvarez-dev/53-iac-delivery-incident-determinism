@@ -1,0 +1,10 @@
+{
+  "service": "onchain-gateway",
+  "availability_target": 0.999,
+  "window_days": 28,
+  "error_budget_policy": {
+    "freeze_releases_when_burn_rate_gt_2x": true,
+    "require_postmortem_when_budget_spent_pct_gt": 50
+  }
+}
+

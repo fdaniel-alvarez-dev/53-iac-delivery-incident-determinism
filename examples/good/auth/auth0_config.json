@@ -1,0 +1,6 @@
+{
+  "issuer": "https://example-tenant.auth0.com/",
+  "audience": "https://api.example.invalid/onchain-gateway",
+  "jwks_cache_seconds": 300
+}
+

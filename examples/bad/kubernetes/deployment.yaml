@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: risky-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: risky-app
+  template:
+    metadata:
+      labels:
+        app: risky-app
+    spec:
+      containers:
+        - name: app
+          image: example.registry/risky-app:latest
+

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: onchain-gateway
+  namespace: blockchain-platform
+spec:
+  tls:
+    - hosts:
+        - gateway.example.invalid
+      secretName: onchain-gateway-tls
+  rules:
+    - host: gateway.example.invalid
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: onchain-gateway
+                port:
+                  name: ws
+

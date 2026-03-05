@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: onchain-gateway-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: onchain-gateway.rules
+      rules:
+        - alert: OnchainGatewayHighErrorRate
+          expr: rate(http_requests_total{job="onchain-gateway",status=~"5.."}[5m]) > 1
+          for: 10m
+          labels:
+            severity: page
+            team: devops
+            service: onchain-gateway
+          annotations:
+            summary: "High 5xx error rate for onchain-gateway"
+            runbook_url: "docs/runbooks/incident_observability.md"
+

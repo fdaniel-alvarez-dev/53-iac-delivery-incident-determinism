@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onchain-gateway
+  namespace: blockchain-platform
+  labels:
+    app: onchain-gateway
+    team: devops
+spec:
+  replicas: 3
+  progressDeadlineSeconds: 600
+  selector:
+    matchLabels:
+      app: onchain-gateway
+  template:
+    metadata:
+      labels:
+        app: onchain-gateway
+        team: devops
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app
+          image: example.registry/onchain-gateway:sha-0123456789abcdef
+          ports:
+            - name: grpc
+              containerPort: 8443
+            - name: ws
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: ws
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: ws
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+
